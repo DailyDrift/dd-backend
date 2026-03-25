@@ -9,17 +9,18 @@ generator client {
 
 // prisma/schema.prisma
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
   // uncomment next line if you use Prisma <5.10
   // directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now()) @map("created_at")
+  id            Int            @id @default(autoincrement())
+  username      String         @unique
+  password      String
+  createdAt     DateTime       @default(now()) @map("created_at")
   refreshTokens RefreshToken[]
+  journals      Journal[]
 
   @@map("users")
 }
@@ -33,4 +34,29 @@ model RefreshToken {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("refresh_tokens")
+}
+
+model Journal {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  date        DateTime @default(now()) @map("date") @db.Date
+  waterIntake Int?     @map("water_intake")
+  mood        Int?
+  sleepHours  Int?     @map("sleep_hours")
+  workout     Int?
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  todos       Todo[]
+
+  @@unique([userId, date])
+  @@map("journals")
+}
+
+model Todo {
+  id        Int     @id @default(autoincrement())
+  journalId Int     @map("journal_id")
+  content   String
+  done      Boolean @default(false)
+  journal   Journal @relation(fields: [journalId], references: [id], onDelete: Cascade)
+
+  @@map("todos")
 }

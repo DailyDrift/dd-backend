@@ -1,5 +1,5 @@
 // src/auth/auth.controller.ts
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtGuard } from './guards/jwt.guard';
 import { AuthDto } from './dto/auth.dto';
@@ -26,7 +26,8 @@ export class AuthController {
 
   @UseGuards(JwtGuard)
   @Post('logout')
-  logout(@Body() dto: RefreshDto) {
-    return this.auth.logout(dto.refreshToken);
+  logout(@Req() req) {
+    return this.auth.logout(req.user.userId);
   }
+
 }
