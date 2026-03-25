@@ -1,4 +1,3 @@
-// src/journal/journal.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpsertJournalDto } from './dto/upsert-journal.dto';
@@ -9,7 +8,7 @@ export class JournalService {
 
   async upsertToday(userId: number, dto: UpsertJournalDto) {
     const today = new Date();
-    today.setUTCHours(0, 0, 0, 0); // nur das Datum, keine Uhrzeit
+    today.setUTCHours(0, 0, 0, 0);
 
     const journal = await this.prisma.journal.upsert({
       where: {

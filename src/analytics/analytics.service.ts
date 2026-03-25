@@ -112,7 +112,7 @@ export class AnalyticsService {
     const openTodos = totalTodos - completedTodos;
     const completionRate =
       totalTodos > 0
-        ? Math.round((completedTodos / totalTodos) * 1000) / 10 // z.B. 66.7
+        ? Math.round((completedTodos / totalTodos) * 1000) / 10
         : 0;
 
     return {
@@ -224,7 +224,7 @@ export class AnalyticsService {
       },
       daysLogged,
       daysWithWorkout,
-      avgWorkout, // 0.0 - 2.0
+      avgWorkout,
       workoutDistribution,
       dailyBreakdown: journals.map((j) => ({
         date: j.date.toISOString().split('T')[0],
