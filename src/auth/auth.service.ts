@@ -42,7 +42,6 @@ export class AuthService {
   }
 
   async refresh(token: string) {
-
     if (!token) {
       throw new UnauthorizedException('Refresh token is required');
     }
@@ -60,9 +59,9 @@ export class AuthService {
     return this.generateTokens(stored.user.id, stored.user.username);
   }
 
-  async logout(token: string) {
-    await this.prisma.refreshToken.deleteMany({ where: { token } });
-    throw new HttpException('Logged out successfully', HttpStatus.OK);
+  async logout(userId: number) {
+    await this.prisma.refreshToken.deleteMany({ where: { userId } });
+    return { message: 'Logged out successfully' };
   }
 
   private async generateTokens(userId: number, username: string) {
