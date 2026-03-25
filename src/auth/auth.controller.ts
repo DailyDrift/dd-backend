@@ -5,7 +5,7 @@ import { JwtGuard } from './guards/jwt.guard';
 import { AuthDto } from './dto/auth.dto';
 import { RefreshDto } from './dto/refresh.dto';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private auth: AuthService) {}
 
@@ -29,5 +29,4 @@ export class AuthController {
   logout(@Req() req) {
     return this.auth.logout(req.user.userId);
   }
-
 }

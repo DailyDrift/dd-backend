@@ -1,5 +1,5 @@
 // src/journal/journal.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpsertJournalDto } from './dto/upsert-journal.dto';
 
@@ -56,6 +56,24 @@ export class JournalService {
         userId_date: { userId, date: today },
       },
       include: { todos: true },
+    });
+  }
+
+  async updateTodoStatus(userId: number, todoId: number, done: boolean) {
+    const todo = await this.prisma.todo.findFirst({
+      where: {
+        id: todoId,
+        journal: { userId },
+      },
+    });
+
+    if (!todo) {
+      throw new NotFoundException('Todo not found');
+    }
+
+    return this.prisma.todo.update({
+      where: { id: todoId },
+      data: { done },
     });
   }
 }
