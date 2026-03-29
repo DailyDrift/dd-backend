@@ -35,8 +35,12 @@ $ npm install
 
 ```bash
 $ npx prisma generate
-$ npm run start:dev
+```
 
+Put the `.env`-File into the project root (`/dd-backend`)
+
+```bash
+$ npm run start:dev
 ```
 
 ## License
