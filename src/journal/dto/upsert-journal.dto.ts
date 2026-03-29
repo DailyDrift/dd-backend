@@ -8,6 +8,7 @@ import {
   IsNotEmpty,
   ValidateNested,
   IsBoolean,
+  IsNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -22,7 +23,7 @@ class TodoDto {
 }
 
 export class UpsertJournalDto {
-  @IsInt()
+  @IsNumber()
   @Min(0)
   @IsOptional()
   waterIntake?: number;
@@ -33,7 +34,7 @@ export class UpsertJournalDto {
   @IsOptional()
   mood?: number;
 
-  @IsInt()
+  @IsNumber()
   @Min(0)
   @Max(24)
   @IsOptional()
